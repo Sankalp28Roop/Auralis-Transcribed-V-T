@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model VideoJob {
+  id             String               @id @default(cuid())
+  url            String
+  isYouTube      Boolean              @default(true)
+  transcript     String               // JSON string of Array of { start, end, text }
+  rawText        String?              // Concatenated full text
+  characterCount Int                  @default(0)
+  processingTime Float                // In seconds
+  status         String               @default("COMPLETED")
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+
+  audioJobs      AudioSynthesisJob[]
+}
+
+model AudioSynthesisJob {
+  id             String    @id @default(cuid())
+  voiceProfile   String
+  audioUrl       String    // Local path or cloud URL to the generated mp3
+  processingTime Float     // In seconds
+  status         String    @default("COMPLETED")
+  createdAt      DateTime  @default(now())
+  
+  videoJobId     String
+  videoJob       VideoJob  @relation(fields: [videoJobId], references: [id], onDelete: Cascade)
+}
