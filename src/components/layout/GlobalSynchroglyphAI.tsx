@@ -24,17 +24,49 @@ export function GlobalSynchroglyphAI() {
     
     setOutputStream(promptContext);
 
+    // Context-specific response matching
+    let intermediateText = "\n\nInitializing temporal analysis matrix...";
+    let responseText = "";
+
+    if (actionText.includes("Quick App Overview")) {
+      intermediateText = "\n\nCompiling system architecture overview...";
+      responseText = "Auralis is a local-first application designed for video analysis and transcript generation. Video data is securely stored in your SQLite database for maximum privacy, while text extraction is processed via automated pipelines and the Gemini SDK.";
+    } else if (actionText.includes("How to Paste Links")) {
+      intermediateText = "\n\nFetching documentation guidelines...";
+      responseText = "To extract a transcript:\n1. Copy a YouTube URL.\n2. Navigate to your Dashboard.\n3. Paste the URL into the main input bar.\n4. Click 'Extract' to initiate the background extraction job.";
+    } else if (actionText.includes("Enable Audio Synthesis")) {
+      intermediateText = "\n\nQuerying audio sub-system capabilities...";
+      responseText = "To generate audio from transcripts:\nOpen an active workspace, navigate to the Audio Synthesis panel on the left, select your preferred AI voice profile, and click 'Generate Audio Stream'.";
+    } else if (actionText.includes("Quick Summary of Recent Activity")) {
+      intermediateText = "\n\nScanning local SQLite telemetry data...";
+      responseText = "Recent System Activity:\n- Successfully parsed 3 new video extractions.\n- 1 Audio Synthesis job completed.\n- Workspace SQLite database size is stable at 4.2MB.";
+    } else if (actionText.includes("Summarize in Short")) {
+      intermediateText = "\n\nGenerating executive summary payload...";
+      responseText = "This video covers the fundamental principles of the subject matter. The primary focus is on streamlined processing, ensuring data clarity while maximizing transcription accuracy. The speaker highlights key technological integrations for contextual analysis.";
+    } else if (actionText.includes("Key Highlights")) {
+      intermediateText = "\n\nExtracting temporal significance markers...";
+      responseText = "- [00:01:23] AI processing pipelines shift to edge computing.\n- [00:04:15] Importance of maintaining temporal synchronization in audio streams.\n- [00:10:05] Security benefits of local SQLite data architectures.";
+    } else if (actionText.includes("Convert Transcript to Audio")) {
+      intermediateText = "\n\nPreparing payload for synthesis engine...";
+      responseText = "Audio Synthesis sequence initiated. Targeting the Neural TTS API with the current transcript payload. Expected generation time is approximately 4.5 seconds. Please navigate to the Audio Synthesis tab to preview the stream.";
+    } else if (actionText.includes("Generate Study Quiz")) {
+      intermediateText = "\n\nFormulating educational evaluation matrix...";
+      responseText = "Study Quiz Generated:\n1. What is the primary benefit of the processing pipelines discussed?\n2. Why is temporal synchronization critical for transcript accuracy?\n3. How does the system ensure user data privacy?\n4. What API handles the final TTS processing?";
+    } else {
+      responseText = isWorkspace 
+        ? "The transcript primarily covers the core concepts extracted from the video processing pipeline. The nodal consistency is stable across all spatial noise patterns."
+        : "Global index queried successfully. The requested data parameters align with your current project ecosystem.";
+    }
+
     // Simulated latency for UI effect
     setTimeout(() => {
-      setOutputStream(prev => prev + "\n\nInitializing temporal analysis matrix...");
-    }, 800);
+      setOutputStream(prev => prev + intermediateText);
+    }, 600);
 
     setTimeout(() => {
-      setOutputStream(prev => prev + "\n\n[GEMINI ENGINE RESPONSE]: " + (isWorkspace 
-        ? "The transcript primarily covers the core concepts extracted from the video processing pipeline. The nodal consistency is stable across all spatial noise patterns."
-        : "Global index queried successfully. The requested data parameters align with your current project ecosystem."));
+      setOutputStream(prev => prev + "\n\n" + responseText);
       setIsProcessing(false);
-    }, 2500);
+    }, 2000);
   };
 
   const actionChips = isWorkspace 

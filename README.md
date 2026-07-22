@@ -19,6 +19,9 @@ Elevate your sound design with professional-grade AI features, sub-millisecond p
 ### 5. Upgrade Plan
 ![Upgrade plan](./public/docs/upgrade-plan.png)
 
+### 6. Synchroglyph AI Engine
+![Synchroglyph AI Engine](./public/docs/synchroglyph-ai-engine.png)
+
 ## ✨ Features
 
 - **Smart Video Extraction:** Seamlessly download and extract high-quality audio from YouTube videos using `yt-dlp` and `ffmpeg`.
