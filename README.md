@@ -22,6 +22,9 @@ Elevate your sound design with professional-grade AI features, sub-millisecond p
 ### 6. Synchroglyph AI Engine
 ![Synchroglyph AI Engine](./public/docs/synchroglyph-ai-engine.png)
 
+### 7. Payment Gateway (National and International)
+![Payment gateway introduced (National and International Students)](./public/docs/Payment%20gateway%20introduced%20(National%20and%20International%20Students).png)
+
 ## ✨ Features
 
 - **Smart Video Extraction:** Seamlessly download and extract high-quality audio from YouTube videos using `yt-dlp` and `ffmpeg`.

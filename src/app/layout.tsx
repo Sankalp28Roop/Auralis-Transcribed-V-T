@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { GlobalSynchroglyphAI } from "@/components/layout/GlobalSynchroglyphAI";
+import { ProModal } from "@/components/billing/ProModal";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -33,6 +34,7 @@ export default function RootLayout({
         {children}
         <Toaster />
         <GlobalSynchroglyphAI />
+        <ProModal />
       </body>
     </html>
   );

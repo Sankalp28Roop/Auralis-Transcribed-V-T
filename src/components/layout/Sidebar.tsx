@@ -1,3 +1,5 @@
+"use client";
+
 import Link from 'next/link';
 import { BarChart, FolderOpen, Settings, Zap, HelpCircle, LifeBuoy, AudioLines } from 'lucide-react';
 
@@ -43,9 +45,12 @@ export function Sidebar() {
         <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
           <h4 className="text-sm font-medium text-white mb-1">Power user?</h4>
           <p className="text-xs text-zinc-400 mb-3">Upgrade to Pro</p>
-          <Link href="/upgrade" className="block text-center w-full bg-[#6d28d9] hover:bg-[#5b21b6] text-white text-xs font-medium py-2 rounded-lg transition-colors">
+          <button 
+            onClick={() => window.dispatchEvent(new Event("open-pro-modal"))}
+            className="block text-center w-full bg-cyan-600 hover:bg-cyan-500 text-black text-xs font-bold py-2 rounded-lg transition-colors"
+          >
             Upgrade to Pro
-          </Link>
+          </button>
         </div>
         
         <div className="space-y-1 px-1">

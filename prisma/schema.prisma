@@ -33,3 +33,22 @@ model AudioSynthesisJob {
   videoJobId     String
   videoJob       VideoJob  @relation(fields: [videoJobId], references: [id], onDelete: Cascade)
 }
+
+model UserSubscription {
+  id          String   @id @default("local-user")
+  tier        String   @default("free") // "free" | "pro"
+  licenseKey  String?
+  updatedAt   DateTime @updatedAt
+}
+
+model PaymentLog {
+  id            String   @id @default(cuid())
+  transactionId String   @unique
+  provider      String   // "simulated" | "stripe" | "razorpay"
+  amount        Float
+  currency      String
+  status        String   // "pending" | "completed" | "failed"
+  rawResponseJson String?
+  createdAt     DateTime @default(now())
+}
+

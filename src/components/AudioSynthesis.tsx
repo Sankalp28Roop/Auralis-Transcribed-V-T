@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
-import { AudioLines, Download, PlayCircle, Loader2 } from "lucide-react";
+import { AudioLines, Download, PlayCircle, Loader2, Lock } from "lucide-react";
 import { toast } from "sonner";
+import { getUserSubscription } from "@/app/actions/billing";
 
 interface AudioSynthesisProps {
   jobId: string;
@@ -24,9 +25,28 @@ export function AudioSynthesis({ jobId }: AudioSynthesisProps) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState(0);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [tier, setTier] = useState("free");
+
+  const fetchTier = async () => {
+    const res = await getUserSubscription();
+    if (res.success && res.tier) {
+      setTier(res.tier);
+    }
+  };
+
+  useEffect(() => {
+    fetchTier();
+    window.addEventListener("subscription-updated", fetchTier);
+    return () => window.removeEventListener("subscription-updated", fetchTier);
+  }, []);
 
   const handleGenerate = async () => {
     if (!jobId) return;
+
+    if (tier !== "pro") {
+      window.dispatchEvent(new Event("open-pro-modal"));
+      return;
+    }
     
     setIsGenerating(true);
     setProgress(0);
@@ -89,10 +109,19 @@ export function AudioSynthesis({ jobId }: AudioSynthesisProps) {
             
             <Button 
               onClick={handleGenerate}
-              className="w-full h-12 bg-white text-black hover:bg-white/90 rounded-xl mt-2 font-medium"
+              className={`w-full h-12 rounded-xl mt-2 font-medium ${tier === "pro" ? "bg-white text-black hover:bg-white/90" : "bg-cyan-900/40 text-cyan-400 hover:bg-cyan-900/60 border border-cyan-500/30"}`}
             >
-              <PlayCircle className="h-4 w-4 mr-2" />
-              Generate Studio Audio
+              {tier === "pro" ? (
+                <>
+                  <PlayCircle className="h-4 w-4 mr-2" />
+                  Generate Studio Audio
+                </>
+              ) : (
+                <>
+                  <Lock className="h-4 w-4 mr-2" />
+                  Unlock Pro to Generate
+                </>
+              )}
             </Button>
           </div>
         )}
