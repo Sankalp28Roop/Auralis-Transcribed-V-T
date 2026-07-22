@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+
 import { Copy, Download, Share2, MoreVertical } from "lucide-react";
 import { AudioSynthesis } from "@/components/AudioSynthesis";
 import YouTube from "react-youtube";
@@ -214,7 +215,6 @@ export function TranscriptWorkspace({ url, transcript, jobId, job }: TranscriptW
         </div>
 
       </div>
-
     </div>
   );
 }
